@@ -1,220 +1,198 @@
-This project was bootstrapped with [Create React Native App](https://github.com/react-community/create-react-native-app).
+Vous trouverez ci-dessous des informations sur l’exécution de tâches courantes. La version la plus récente de ce guide est disponible ici.
 
-Below you'll find information about performing common tasks. The most recent version of this guide is available [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md).
+## Table des matières
 
-## Table of Contents
+Mise à jour vers les nouvelles versions
+Scripts disponibles
+npm start
+npm test
+npm run ios
+npm run android
+npm run eject
+Écriture et exécution de tests
+Variables d’environnement
+Configuration de l’adresse IP du packager
+Ajout de Flow
+Personnalisation du nom d’affichage et de l’icône de l’application
+Partage et déploiement
+Publication sur la communauté React Native d’Expo
+Création d’une application « autonome » Expo
+Éjection de Create React Native App
+Dépendances de build (Xcode et Android Studio)
+Dois-je utiliser ExpoKit ?
+Dépannage
+Réseau
+Le simulateur iOS ne s’ouvre pas
+Le code QR ne se scanne pas
+## Mise à jour vers les nouvelles versions
 
-* [Updating to New Releases](#updating-to-new-releases)
-* [Available Scripts](#available-scripts)
-  * [npm start](#npm-start)
-  * [npm test](#npm-test)
-  * [npm run ios](#npm-run-ios)
-  * [npm run android](#npm-run-android)
-  * [npm run eject](#npm-run-eject)
-* [Writing and Running Tests](#writing-and-running-tests)
-* [Environment Variables](#environment-variables)
-  * [Configuring Packager IP Address](#configuring-packager-ip-address)
-* [Adding Flow](#adding-flow)
-* [Customizing App Display Name and Icon](#customizing-app-display-name-and-icon)
-* [Sharing and Deployment](#sharing-and-deployment)
-  * [Publishing to Expo's React Native Community](#publishing-to-expos-react-native-community)
-  * [Building an Expo "standalone" app](#building-an-expo-standalone-app)
-  * [Ejecting from Create React Native App](#ejecting-from-create-react-native-app)
-    * [Build Dependencies (Xcode & Android Studio)](#build-dependencies-xcode-android-studio)
-    * [Should I Use ExpoKit?](#should-i-use-expokit)
-* [Troubleshooting](#troubleshooting)
-  * [Networking](#networking)
-  * [iOS Simulator won't open](#ios-simulator-wont-open)
-  * [QR Code does not scan](#qr-code-does-not-scan)
+Vous ne devriez avoir besoin de mettre à jour l’installation globale de create-react-native-app que très rarement, idéalement jamais.
 
-## Updating to New Releases
+La mise à jour de la dépendance react-native-scripts de votre application devrait être aussi simple que d’augmenter le numéro de version dans package.json et de réinstaller les dépendances de votre projet.
 
-You should only need to update the global installation of `create-react-native-app` very rarely, ideally never.
+La mise à niveau vers une nouvelle version de React Native nécessite la mise à jour des versions des packages react-native, react et expo, et la définition du sdkVersion correct dans app.json. Consultez le guide des versions pour obtenir des informations à jour sur la compatibilité des versions des packages.
 
-Updating the `react-native-scripts` dependency of your app should be as simple as bumping the version number in `package.json` and reinstalling your project's dependencies.
+## Scripts disponibles
 
-Upgrading to a new version of React Native requires updating the `react-native`, `react`, and `expo` package versions, and setting the correct `sdkVersion` in `app.json`. See the [versioning guide](https://github.com/react-community/create-react-native-app/blob/master/VERSIONS.md) for up-to-date information about package version compatibility.
+Si Yarn a été installé lors de l’initialisation du projet, les dépendances auront été installées via Yarn, et vous devriez probablement l’utiliser pour exécuter ces commandes également. Contrairement à l’installation des dépendances, la syntaxe d’exécution des commandes est identique pour Yarn et NPM au moment de la rédaction de ce document.
 
-## Available Scripts
+### npm start
 
-If Yarn was installed when the project was initialized, then dependencies will have been installed via Yarn, and you should probably use it to run these commands as well. Unlike dependency installation, command running syntax is identical for Yarn and NPM at the time of this writing.
+Exécute votre application en mode développement.
 
-### `npm start`
+Ouvrez-la dans l’application Expo sur votre téléphone pour la visualiser. Elle se rechargera si vous enregistrez des modifications dans vos fichiers, et vous verrez les erreurs de build et les journaux dans le terminal.
 
-Runs your app in development mode.
+Parfois, vous devrez peut-être réinitialiser ou effacer le cache du packager React Native. Pour ce faire, vous pouvez passer l’indicateur --reset-cache au script de démarrage :
 
-Open it in the [Expo app](https://expo.io) on your phone to view it. It will reload if you save edits to your files, and you will see build errors and logs in the terminal.
 
-Sometimes you may need to reset or clear the React Native packager's cache. To do so, you can pass the `--reset-cache` flag to the start script:
-
-```
+Copy
 npm start --reset-cache
-# or
+# ou
 yarn start --reset-cache
-```
+#### npm test
 
-#### `npm test`
+Exécute le programme d’exécution de tests jest sur vos tests.
 
-Runs the [jest](https://github.com/facebook/jest) test runner on your tests.
+#### npm run ios
 
-#### `npm run ios`
+Comme npm start, mais tente également d’ouvrir votre application dans le simulateur iOS si vous êtes sur un Mac et que vous l’avez installé.
 
-Like `npm start`, but also attempts to open your app in the iOS Simulator if you're on a Mac and have it installed.
+#### npm run android
 
-#### `npm run android`
+Comme npm start, mais tente également d’ouvrir votre application sur un appareil ou un émulateur Android connecté. Nécessite une installation des outils de build Android (voir la documentation React Native pour une configuration détaillée). Nous recommandons également d’installer Genymotion comme émulateur Android. Une fois que vous avez terminé la configuration de l’environnement de build natif, il existe deux options pour rendre la bonne copie de adb disponible pour Create React Native App :
 
-Like `npm start`, but also attempts to open your app on a connected Android device or emulator. Requires an installation of Android build tools (see [React Native docs](https://facebook.github.io/react-native/docs/getting-started.html) for detailed setup). We also recommend installing Genymotion as your Android emulator. Once you've finished setting up the native build environment, there are two options for making the right copy of `adb` available to Create React Native App:
+Utilisation de adb d’Android Studio
+Assurez-vous que vous pouvez exécuter adb à partir de votre terminal.
+Ouvrez Genymotion et accédez à Paramètres -> ADB. Sélectionnez « Utiliser des outils SDK Android personnalisés » et mettez à jour avec votre répertoire Android SDK.
+Utilisation de adb de Genymotion
+Trouvez la copie de adb de Genymotion. Sur macOS par exemple, il s’agit normalement de /Applications/Genymotion.app/Contents/MacOS/tools/.
+Ajoutez le répertoire des outils Genymotion à votre chemin (instructions pour Mac, Linux et Windows).
+Assurez-vous que vous pouvez exécuter adb à partir de votre terminal.
+#### npm run eject
 
-##### Using Android Studio's `adb`
+Cela lancera le processus d’« éjection » des scripts de build de Create React Native App. On vous posera quelques questions sur la façon dont vous souhaitez créer votre projet.
 
-1. Make sure that you can run adb from your terminal.
-2. Open Genymotion and navigate to `Settings -> ADB`. Select “Use custom Android SDK tools” and update with your [Android SDK directory](https://stackoverflow.com/questions/25176594/android-sdk-location).
+Avertissement : L’exécution de l’éjection est une action permanente (mis à part le système de contrôle de version que vous utilisez). Une application éjectée nécessitera la configuration d’un environnement Xcode et/ou Android Studio.
 
-##### Using Genymotion's `adb`
+## Personnalisation du nom d’affichage et de l’icône de l’application
 
-1. Find Genymotion’s copy of adb. On macOS for example, this is normally `/Applications/Genymotion.app/Contents/MacOS/tools/`.
-2. Add the Genymotion tools directory to your path (instructions for [Mac](http://osxdaily.com/2014/08/14/add-new-path-to-path-command-line/), [Linux](http://www.computerhope.com/issues/ch001647.htm), and [Windows](https://www.howtogeek.com/118594/how-to-edit-your-system-path-for-easy-command-line-access/)).
-3. Make sure that you can run adb from your terminal.
+Vous pouvez modifier app.json pour inclure des clés de configuration sous la clé expo.
 
-#### `npm run eject`
+Pour modifier le nom d’affichage de votre application, définissez la clé expo.name dans app.json sur une chaîne appropriée.
 
-This will start the process of "ejecting" from Create React Native App's build scripts. You'll be asked a couple of questions about how you'd like to build your project.
+Pour définir une icône d’application, définissez la clé expo.icon dans app.json sur un chemin local ou une URL. Il est recommandé d’utiliser un fichier png 512x512 avec transparence.
 
-**Warning:** Running eject is a permanent action (aside from whatever version control system you use). An ejected app will require you to have an [Xcode and/or Android Studio environment](https://facebook.github.io/react-native/docs/getting-started.html) set up.
+## Écriture et exécution de tests
 
-## Customizing App Display Name and Icon
+Ce projet est configuré pour utiliser jest pour les tests. Vous pouvez configurer la stratégie de test de votre choix, mais jest fonctionne dès la sortie de la boîte. Créez des fichiers de test dans des répertoires appelés __tests__ ou avec l’extension .test pour que les fichiers soient chargés par jest. Consultez le projet modèle pour un exemple de test. La documentation jest est également une excellente ressource, tout comme le tutoriel de test React Native.
 
-You can edit `app.json` to include [configuration keys](https://docs.expo.io/versions/latest/guides/configuration.html) under the `expo` key.
+## Variables d’environnement
 
-To change your app's display name, set the `expo.name` key in `app.json` to an appropriate string.
+Vous pouvez configurer certains comportements de Create React Native App à l’aide de variables d’environnement.
 
-To set an app icon, set the `expo.icon` key in `app.json` to be either a local path or a URL. It's recommended that you use a 512x512 png file with transparency.
+### Configuration de l’adresse IP du packager
 
-## Writing and Running Tests
+Lorsque vous démarrez votre projet, vous verrez quelque chose comme ceci pour l’URL de votre projet :
 
-This project is set up to use [jest](https://facebook.github.io/jest/) for tests. You can configure whatever testing strategy you like, but jest works out of the box. Create test files in directories called `__tests__` or with the `.test` extension to have the files loaded by jest. See the [the template project](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/App.test.js) for an example test. The [jest documentation](https://facebook.github.io/jest/docs/en/getting-started.html) is also a wonderful resource, as is the [React Native testing tutorial](https://facebook.github.io/jest/docs/en/tutorial-react-native.html).
 
-## Environment Variables
-
-You can configure some of Create React Native App's behavior using environment variables.
-
-### Configuring Packager IP Address
-
-When starting your project, you'll see something like this for your project URL:
-
-```
+Copy
 exp://192.168.0.2:19000
-```
+Le « manifeste » à cette URL indique à l’application Expo comment récupérer et charger le bundle JavaScript de votre application, donc même si vous le chargez dans l’application via une URL comme exp://localhost:19000, l’application cliente Expo tentera toujours de récupérer votre application à l’adresse IP fournie par le script de démarrage.
 
-The "manifest" at that URL tells the Expo app how to retrieve and load your app's JavaScript bundle, so even if you load it in the app via a URL like `exp://localhost:19000`, the Expo client app will still try to retrieve your app at the IP address that the start script provides.
+Dans certains cas, ce n’est pas idéal. Cela peut être le cas si vous devez exécuter votre projet dans une machine virtuelle et que vous devez accéder au packager via une adresse IP différente de celle qui s’affiche par défaut. Afin de remplacer l’adresse IP ou le nom d’hôte détecté par Create React Native App, vous pouvez spécifier votre propre nom d’hôte via la variable d’environnement REACT_NATIVE_PACKAGER_HOSTNAME :
 
-In some cases, this is less than ideal. This might be the case if you need to run your project inside of a virtual machine and you have to access the packager via a different IP address than the one which prints by default. In order to override the IP address or hostname that is detected by Create React Native App, you can specify your own hostname via the `REACT_NATIVE_PACKAGER_HOSTNAME` environment variable:
+Mac et Linux :
 
-Mac and Linux:
 
-```
+Copy
 REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname' npm start
-```
+Windows :
 
-Windows:
-```
+
+Copy
 set REACT_NATIVE_PACKAGER_HOSTNAME='my-custom-ip-address-or-hostname'
 npm start
-```
+L’exemple ci-dessus ferait en sorte que le serveur de développement écoute sur exp://my-custom-ip-address-or-hostname:19000.
 
-The above example would cause the development server to listen on `exp://my-custom-ip-address-or-hostname:19000`.
+## Ajout de Flow
 
-## Adding Flow
+Flow est un vérificateur de type statique qui vous aide à écrire du code avec moins de bogues. Consultez cette introduction à l’utilisation des types statiques en JavaScript si vous débutez avec ce concept.
 
-Flow is a static type checker that helps you write code with fewer bugs. Check out this [introduction to using static types in JavaScript](https://medium.com/@preethikasireddy/why-use-static-types-in-javascript-part-1-8382da1e0adb) if you are new to this concept.
+React Native fonctionne avec Flow dès la sortie de la boîte, tant que votre version de Flow correspond à celle utilisée dans la version de React Native.
 
-React Native works with [Flow](http://flowtype.org/) out of the box, as long as your Flow version matches the one used in the version of React Native.
+Pour ajouter une dépendance locale à la bonne version de Flow à un projet Create React Native App, suivez ces étapes :
 
-To add a local dependency to the correct Flow version to a Create React Native App project, follow these steps:
+Trouvez la version Flow [version] au bas du fichier .flowconfig inclus.
+Exécutez npm install --save-dev flow-bin@x.y.z (ou yarn add --dev flow-bin@x.y.z), où x.y.z est le numéro de version .flowconfig.
+Ajoutez "flow": "flow" à la section scripts de votre fichier package.json.
+Ajoutez // @flow à tous les fichiers que vous souhaitez vérifier par rapport aux types (par exemple, à App.js).
+Vous pouvez maintenant exécuter npm run flow (ou yarn flow) pour vérifier les fichiers afin de détecter les erreurs de type.
+Vous pouvez éventuellement utiliser un plugin pour votre IDE ou votre éditeur pour une meilleure expérience intégrée.
 
-1. Find the Flow `[version]` at the bottom of the included [.flowconfig](.flowconfig)
-2. Run `npm install --save-dev flow-bin@x.y.z` (or `yarn add --dev flow-bin@x.y.z`), where `x.y.z` is the .flowconfig version number.
-3. Add `"flow": "flow"` to the `scripts` section of your `package.json`.
-4. Add `// @flow` to any files you want to type check (for example, to `App.js`).
+Pour en savoir plus sur Flow, consultez sa documentation.
 
-Now you can run `npm run flow` (or `yarn flow`) to check the files for type errors.
-You can optionally use a [plugin for your IDE or editor](https://flow.org/en/docs/editors/) for a better integrated experience.
+## Partage et déploiement
 
-To learn more about Flow, check out [its documentation](https://flow.org/).
+Create React Native App effectue beaucoup de travail pour simplifier et rendre la configuration et le développement d’applications simples et directs, mais il est très difficile de faire de même pour le déploiement sur l’App Store d’Apple ou le Play Store de Google sans s’appuyer sur un service hébergé.
 
-## Sharing and Deployment
+### Publication sur la communauté React Native d’Expo
 
-Create React Native App does a lot of work to make app setup and development simple and straightforward, but it's very difficult to do the same for deploying to Apple's App Store or Google's Play Store without relying on a hosted service.
+Expo fournit un hébergement gratuit pour les applications uniquement JS créées par CRNA, vous permettant de partager votre application via l’application cliente Expo. Cela nécessite l’inscription à un compte Expo.
 
-### Publishing to Expo's React Native Community
+Installez l’outil de ligne de commande exp et exécutez la commande de publication :
 
-Expo provides free hosting for the JS-only apps created by CRNA, allowing you to share your app through the Expo client app. This requires registration for an Expo account.
 
-Install the `exp` command-line tool, and run the publish command:
-
-```
+Copy
 $ npm i -g exp
 $ exp publish
-```
+### Création d’une application « autonome » Expo
 
-### Building an Expo "standalone" app
+Vous pouvez également utiliser un service comme les builds autonomes d’Expo si vous souhaitez obtenir un IPA/APK pour la distribution sans avoir à créer vous-même le code natif.
 
-You can also use a service like [Expo's standalone builds](https://docs.expo.io/versions/latest/guides/building-standalone-apps.html) if you want to get an IPA/APK for distribution without having to build the native code yourself.
+### Éjection de Create React Native App
 
-### Ejecting from Create React Native App
+Si vous souhaitez créer et déployer vous-même votre application, vous devrez éjecter de CRNA et utiliser Xcode et Android Studio.
 
-If you want to build and deploy your app yourself, you'll need to eject from CRNA and use Xcode and Android Studio.
+Ceci est généralement aussi simple que d’exécuter npm run eject dans votre projet, ce qui vous guidera tout au long du processus. Assurez-vous d’installer react-native-cli et suivez le guide de démarrage du code natif pour React Native.
 
-This is usually as simple as running `npm run eject` in your project, which will walk you through the process. Make sure to install `react-native-cli` and follow the [native code getting started guide for React Native](https://facebook.github.io/react-native/docs/getting-started.html).
+#### Dois-je utiliser ExpoKit ?
 
-#### Should I Use ExpoKit?
+Si vous avez utilisé des API Expo pendant que vous travailliez sur votre projet, ces appels d’API cesseront de fonctionner si vous éjectez vers un projet React Native ordinaire. Si vous souhaitez continuer à utiliser ces API, vous pouvez éjecter vers « React Native + ExpoKit », ce qui vous permettra toujours de créer votre propre code natif et de continuer à utiliser les API Expo. Consultez le guide d’éjection pour plus de détails sur cette option.
 
-If you have made use of Expo APIs while working on your project, then those API calls will stop working if you eject to a regular React Native project. If you want to continue using those APIs, you can eject to "React Native + ExpoKit" which will still allow you to build your own native code and continue using the Expo APIs. See the [ejecting guide](https://github.com/react-community/create-react-native-app/blob/master/EJECTING.md) for more details about this option.
+## Dépannage
 
-## Troubleshooting
+### Réseau
 
-### Networking
+Si vous ne parvenez pas à charger votre application sur votre téléphone en raison d’un délai d’expiration du réseau ou d’une connexion refusée, une première étape consiste à vérifier que votre téléphone et votre ordinateur sont sur le même réseau et qu’ils peuvent se joindre. Create React Native App a besoin d’accéder aux ports 19000 et 19001, assurez-vous donc que vos paramètres réseau et pare-feu autorisent l’accès de votre appareil à votre ordinateur sur ces deux ports.
 
-If you're unable to load your app on your phone due to a network timeout or a refused connection, a good first step is to verify that your phone and computer are on the same network and that they can reach each other. Create React Native App needs access to ports 19000 and 19001 so ensure that your network and firewall settings allow access from your device to your computer on both of these ports.
+Essayez d’ouvrir un navigateur Web sur votre téléphone et d’ouvrir l’URL que le script du packager affiche, en remplaçant exp:// par http://. Ainsi, par exemple, si sous le code QR dans votre terminal, vous voyez :
 
-Try opening a web browser on your phone and opening the URL that the packager script prints, replacing `exp://` with `http://`. So, for example, if underneath the QR code in your terminal you see:
 
-```
+Copy
 exp://192.168.0.1:19000
-```
+Essayez d’ouvrir Safari ou Chrome sur votre téléphone et de charger
 
-Try opening Safari or Chrome on your phone and loading
 
-```
+Copy
 http://192.168.0.1:19000
-```
+et
 
-and
 
-```
+Copy
 http://192.168.0.1:19001
-```
+Si cela fonctionne, mais que vous ne parvenez toujours pas à charger votre application en scannant le code QR, veuillez ouvrir un problème sur le référentiel Create React Native App avec des détails sur ces étapes et tous les autres messages d’erreur que vous avez pu recevoir.
 
-If this works, but you're still unable to load your app by scanning the QR code, please open an issue on the [Create React Native App repository](https://github.com/react-community/create-react-native-app) with details about these steps and any other error messages you may have received.
+Si vous ne parvenez pas à charger l’URL http dans le navigateur Web de votre téléphone, essayez d’utiliser la fonction de partage de connexion/point d’accès mobile sur votre téléphone (attention à la consommation de données), de connecter votre ordinateur à ce réseau Wi-Fi et de redémarrer le packager. Si vous utilisez un VPN, vous devrez peut-être le désactiver.
 
-If you're not able to load the `http` URL in your phone's web browser, try using the tethering/mobile hotspot feature on your phone (beware of data usage, though), connecting your computer to that WiFi network, and restarting the packager. If you are using a VPN you may need to disable it.
+### Le simulateur iOS ne s’ouvre pas
 
-### iOS Simulator won't open
+Si vous êtes sur un Mac, il existe quelques erreurs que les utilisateurs voient parfois lorsqu’ils tentent d’exécuter npm run ios :
 
-If you're on a Mac, there are a few errors that users sometimes see when attempting to `npm run ios`:
+« code de sortie non nul : 107 »
+« Vous devrez peut-être installer Xcode » mais il est déjà installé
+et d’autres
+Il y a quelques étapes que vous pouvez suivre pour résoudre ce type d’erreurs :
 
-* "non-zero exit code: 107"
-* "You may need to install Xcode" but it is already installed
-* and others
-
-There are a few steps you may want to take to troubleshoot these kinds of errors:
-
-1. Make sure Xcode is installed and open it to accept the license agreement if it prompts you. You can install it from the Mac App Store.
-2. Open Xcode's Preferences, the Locations tab, and make sure that the `Command Line Tools` menu option is set to something. Sometimes when the CLI tools are first installed by Homebrew this option is left blank, which can prevent Apple utilities from finding the simulator. Make sure to re-run `npm/yarn run ios` after doing so.
-3. If that doesn't work, open the Simulator, and under the app menu select `Reset Contents and Settings...`. After that has finished, quit the Simulator, and re-run `npm/yarn run ios`.
-
-### QR Code does not scan
-
-If you're not able to scan the QR code, make sure your phone's camera is focusing correctly, and also make sure that the contrast on the two colors in your terminal is high enough. For example, WebStorm's default themes may [not have enough contrast](https://github.com/react-community/create-react-native-app/issues/49) for terminal QR codes to be scannable with the system barcode scanners that the Expo app uses.
-
-If this causes problems for you, you may want to try changing your terminal's color theme to have more contrast, or running Create React Native App from a different terminal. You can also manually enter the URL printed by the packager script in the Expo app's search bar to load it manually.
+Assurez-vous que Xcode est installé et ouvrez-le pour accepter le contrat de licence s’il vous le demande. Vous pouvez l’installer à partir du Mac App Store.
+Ouvrez les préférences de Xcode, l’onglet Emplacements, et assurez-vous que l’option de menu Outils de ligne de commande est définie sur quelque chose. Parfois, lorsque les outils CLI sont installés pour la première fois par Homebrew, cette option est laissée vide, ce qui peut empêcher les utilitaires Apple de trouver le simulateur. Assurez-vous de relancer npm/yarn run ios après cela.
+Si cela ne fonctionne pas, ouvrez le simulateur et, dans le menu de l’application, sélectionnez Réinitialiser le contenu et les paramètres…. Une fois que cela est terminé, quittez le simulateur et relancez npm/yarn run ios.
